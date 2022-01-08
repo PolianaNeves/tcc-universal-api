@@ -27,11 +27,6 @@ def get_positive_reviews_count(dataset):
     return len(temp_dataset)
 
 
-def get_negative_reviews_count(dataset):
-    temp_dataset = dataset[dataset["label"] == NEGATIVE]
-    return len(temp_dataset)
-
-
 def get_positive_reviews_count_by_year(dataset):
     temp_dataset = dataset[dataset["label"] == POSITIVE]
     grouped_df = temp_dataset.groupby(["year"])
@@ -41,6 +36,11 @@ def get_positive_reviews_count_by_year(dataset):
 def get_positive_reviews_count_filter_by_year(dataset, year):
     temp_dataset = dataset[dataset["label"] == POSITIVE]
     return get_reviews_count_filter_by_year(temp_dataset, year)
+
+
+def get_negative_reviews_count(dataset):
+    temp_dataset = dataset[dataset["label"] == NEGATIVE]
+    return len(temp_dataset)
 
 
 def get_negative_reviews_count_by_year(dataset):

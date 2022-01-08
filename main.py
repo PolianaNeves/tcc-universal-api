@@ -8,10 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
     "http://localhost",
-    "http://localhost:8080",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
@@ -35,18 +33,6 @@ async def top_features(top_n: int = Path(None, description="Top N features to be
     return FrequentTermsListResponse(data=frequent_terms)
 
 
-@app.get("/reviews/positive/count", response_model=ReviewsCount)
-async def count_positive_reviews():
-    count = labeled_reviews.get_positive_reviews_count(dataset_completed)
-    return ReviewsCount(count=count)
-
-
-@app.get("/reviews/negative/count", response_model=ReviewsCount)
-async def count_negative_reviews():
-    count = labeled_reviews.get_negative_reviews_count(dataset_completed)
-    return ReviewsCount(count=count)
-
-
 @app.get("/reviews/count/by/year", response_model=ReviewsCountByYearResponse)
 async def count_positive_reviews_by_year():
     reviews_by_year = labeled_reviews.get_reviews_count_by_year(dataset_completed)
@@ -57,6 +43,12 @@ async def count_positive_reviews_by_year():
 async def count_positive_reviews_by_year(year: int = Path(None, description="Year to applied to the filter")):
     count_by_year = labeled_reviews.get_reviews_count_filter_by_year(dataset_completed, year)
     return ReviewsCountByYear(count=count_by_year, year=str(year))
+
+
+@app.get("/reviews/positive/count", response_model=ReviewsCount)
+async def count_positive_reviews():
+    count = labeled_reviews.get_positive_reviews_count(dataset_completed)
+    return ReviewsCount(count=count)
 
 
 @app.get("/reviews/positive/count/by/year", response_model=ReviewsCountByYearResponse)
@@ -71,6 +63,12 @@ async def count_positive_reviews_by_year(year: int = Path(None, description="Yea
     return ReviewsCountByYear(count=count_by_year, year=str(year))
 
 
+@app.get("/reviews/negative/count", response_model=ReviewsCount)
+async def count_negative_reviews():
+    count = labeled_reviews.get_negative_reviews_count(dataset_completed)
+    return ReviewsCount(count=count)
+
+
 @app.get("/reviews/negative/count/by/year", response_model=ReviewsCountByYearResponse)
 async def count_negative_reviews_by_year():
     reviews_by_year = labeled_reviews.get_negative_reviews_count_by_year(dataset_completed)
@@ -81,4 +79,3 @@ async def count_negative_reviews_by_year():
 async def count_negative_reviews_by_year(year: int = Path(None, description="Year to applied to the filter")):
     count_by_year = labeled_reviews.get_negative_reviews_count_filter_by_year(dataset_completed, year)
     return ReviewsCountByYear(count=count_by_year, year=str(year))
-
