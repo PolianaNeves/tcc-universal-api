@@ -2,13 +2,13 @@ from pydantic import BaseModel
 from typing import List
 
 
-class FrequentTermsResponse(BaseModel):
+class FrequentTerms(BaseModel):
     term: str
     frequency: str
 
 
-class FrequentTermsListResponse(BaseModel):
-    data: List[FrequentTermsResponse]
+class FrequentTermsList(BaseModel):
+    data: List[FrequentTerms]
 
 
 class ReviewsCount(BaseModel):
@@ -19,5 +19,13 @@ class ReviewsCountByYear(ReviewsCount):
     year: str
 
 
-class ReviewsCountByYearResponse(BaseModel):
+class ReviewsCountByYearList(BaseModel):
     data: List[ReviewsCountByYear]
+
+
+class ReviewsCountByBranch(ReviewsCount):
+    branch: str
+
+
+class ReviewsCountByBranchList(BaseModel):
+    data: List[ReviewsCountByBranch]
