@@ -2,7 +2,8 @@ from fastapi import FastAPI, Path
 from controllers import labeled_reviews
 from init_dataset import positive_frequencies, dataset_completed
 from models.responses.labeled_reviews import FrequentTermsList, FrequentTerms, ReviewsCount, \
-    ReviewsCountByYearList, ReviewsCountByYear, ReviewsCountByBranchList, ReviewsCountByBranch
+    ReviewsCountByYearList, ReviewsCountByYear, ReviewsCountByBranchList, ReviewsCountByBranch, \
+    ReviewsCountByRatingsList, ReviewsCountByRating
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -57,6 +58,18 @@ async def count_reviews_by_branch(branch: str = Path(None, description="Branch t
     return ReviewsCountByBranch(branch=branch, count=count_by_branch)
 
 
+@app.get("/reviews/count/by/ratings", response_model=ReviewsCountByRatingsList)
+async def count_reviews_by_ratings():
+    by_ratings = labeled_reviews.get_reviews_count_by_ratings(dataset_completed)
+    return ReviewsCountByRatingsList(data=by_ratings)
+
+
+@app.get("/reviews/count/by/ratings/{rating}", response_model=ReviewsCountByRating)
+async def count_reviews_by_rating(rating: float = Path(None, description="Rating to filter reviews")):
+    count_by_rating = labeled_reviews.get_reviews_count_filter_by_rating(dataset_completed, rating)
+    return ReviewsCountByRating(rating=rating, count=count_by_rating)
+
+
 @app.get("/reviews/positive/count", response_model=ReviewsCount)
 async def count_positive_reviews():
     count = labeled_reviews.get_positive_reviews_count(dataset_completed)
@@ -87,6 +100,18 @@ async def count_positive_reviews_by_branch(branch: str = Path(None, description=
     return ReviewsCountByBranch(branch=branch, count=count_by_branch)
 
 
+@app.get("/reviews/positive/count/by/ratings", response_model=ReviewsCountByRatingsList)
+async def count_positive_reviews_by_ratings():
+    by_ratings = labeled_reviews.get_positive_reviews_count_by_ratings(dataset_completed)
+    return ReviewsCountByRatingsList(data=by_ratings)
+
+
+@app.get("/reviews/positive/count/by/ratings/{rating}", response_model=ReviewsCountByRating)
+async def count_positive_reviews_by_rating(rating: float = Path(None, description="Rating to filter reviews")):
+    count_by_rating = labeled_reviews.get_positive_reviews_count_filter_by_rating(dataset_completed, rating)
+    return ReviewsCountByRating(rating=rating, count=count_by_rating)
+
+
 @app.get("/reviews/negative/count", response_model=ReviewsCount)
 async def count_negative_reviews():
     count = labeled_reviews.get_negative_reviews_count(dataset_completed)
@@ -115,3 +140,15 @@ async def count_negative_reviews_by_branch():
 async def count_negative_reviews_by_branch(branch: str = Path(None, description="Branch to filter the reviews")):
     count_by_branch = labeled_reviews.get_negative_reviews_count_filter_by_branch(dataset_completed, branch)
     return ReviewsCountByBranch(count=count_by_branch, branch=branch)
+
+
+@app.get("/reviews/negative/count/by/ratings", response_model=ReviewsCountByRatingsList)
+async def count_negative_reviews_by_ratings():
+    by_ratings = labeled_reviews.get_negative_reviews_count_by_ratings(dataset_completed)
+    return ReviewsCountByRatingsList(data=by_ratings)
+
+
+@app.get("/reviews/negative/count/by/ratings/{rating}", response_model=ReviewsCountByRating)
+async def count_negative_reviews_by_rating(rating: float = Path(None, description="Rating to filter reviews")):
+    count_by_rating = labeled_reviews.get_negative_reviews_count_filter_by_rating(dataset_completed, rating)
+    return ReviewsCountByRating(rating=rating, count=count_by_rating)

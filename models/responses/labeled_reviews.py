@@ -29,3 +29,11 @@ class ReviewsCountByBranch(ReviewsCount):
 
 class ReviewsCountByBranchList(BaseModel):
     data: List[ReviewsCountByBranch]
+
+
+class ReviewsCountByRating(ReviewsCount):
+    rating: float
+
+
+class ReviewsCountByRatingsList(BaseModel):
+    data: List[ReviewsCountByRating]

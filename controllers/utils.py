@@ -1,4 +1,4 @@
-from models.responses.labeled_reviews import ReviewsCountByYear, ReviewsCountByBranch
+from models.responses.labeled_reviews import ReviewsCountByYear, ReviewsCountByBranch, ReviewsCountByRating
 
 
 def count_reviews_by_year(grouped_df):
@@ -12,6 +12,14 @@ def count_reviews_by_year(grouped_df):
 def count_reviews_by_branch(grouped_df):
     list_by_branch = []
     for key, item in grouped_df:
-        count_by_branch = ReviewsCountByBranch(branch=str(key), count=len(item))
+        count_by_branch = ReviewsCountByBranch(branch=key, count=len(item))
         list_by_branch.append(count_by_branch)
     return list_by_branch
+
+
+def count_reviews_by_rating(grouped_df):
+    list_by_rating = []
+    for key, item in grouped_df:
+        count_by_rating = ReviewsCountByRating(rating=key, count=len(item))
+        list_by_rating.append(count_by_rating)
+    return list_by_rating
