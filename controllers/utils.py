@@ -1,4 +1,6 @@
-from models.responses.labeled_reviews import ReviewsCountByYear, ReviewsCountByBranch, ReviewsCountByRating
+from models.branches import ReviewsCountByBranch
+from models.by_year import ReviewsCountByYear
+from models.ratings import ReviewsCountByRating
 
 
 def count_reviews_by_year(grouped_df):
