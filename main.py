@@ -3,12 +3,14 @@ from controllers import reviews
 from init_dataset import positive_frequencies, dataset_completed
 from models.reviews import FrequentTermsList, FrequentTerms, ReviewsCount
 from fastapi.middleware.cors import CORSMiddleware
-from routers import branches, ratings, by_year
+from routers import branches, ratings, by_year, time_series
+import time_series_init
 
 app = FastAPI()
 app.include_router(branches.router, tags=["By branches"])
 app.include_router(ratings.router, tags=["By ratings"])
 app.include_router(by_year.router, tags=["By year"])
+app.include_router(time_series.router, tags=["Time series"])
 
 origins = [
     "http://localhost",
