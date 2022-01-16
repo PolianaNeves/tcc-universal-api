@@ -4,6 +4,7 @@ from models.ratings import ReviewsCountByRating
 import pandas as pd
 from autots import AutoTS
 import matplotlib.pyplot as plt
+from prophet import Prophet
 import os
 
 my_path = os.path.relpath(os.path.join(os.path.dirname(__file__), os.pardir))
@@ -39,7 +40,6 @@ def parse_df(dataset):
     parsed_df = pd.DataFrame(columns=["date", "reviews_count"])
     for key, item in grouped_ds:
         parsed_df = parsed_df.append({"date": f'{key[0]}-{key[1]}', "reviews_count": len(item)}, ignore_index=True)
-
     parsed_df['date'] = pd.to_datetime(parsed_df['date'], infer_datetime_format=True, format='%y%m')
     parsed_df['reviews_count'] = pd.to_numeric(parsed_df["reviews_count"])
     parsed_df = parsed_df[["date", "reviews_count"]]
@@ -70,3 +70,26 @@ def plot_prediction(df, file_name, fig_number):
     plt.grid()
     plt.savefig(os.path.join("./assets", file_name))
 
+
+def get_limit_index(dataset):
+    """Get the limit index for train and model of the dataset. Considering 75%"""
+    return int(0.75 * len(dataset))
+
+
+def train_with_prophet_model(dataset):
+    """Train the data with Prophet model"""
+    dataset.columns = ["ds", "y"]
+    prophet = Prophet(weekly_seasonality=True)
+    limit_index = get_limit_index(dataset)
+    train = dataset[:limit_index]
+    test = dataset[limit_index:]
+    prophet.fit(train)
+    return prophet
+
+
+def predict_with_prophet_model(prophet, file_name):
+    """Make a prediction with prophet model and periods (param)."""
+    future = prophet.make_future_dataframe(periods=2555)
+    forecast = prophet.predict(future)
+    figure = prophet.plot_components(forecast)
+    figure.savefig(os.path.join("./assets/details", file_name))
