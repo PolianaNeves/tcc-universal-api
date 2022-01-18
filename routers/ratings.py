@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Path
 from controllers import ratings
-from init_dataset import dataset_completed
+from inits.init_dataset import dataset_completed
 from models.ratings import ReviewsCountByRatingsList, ReviewsCountByRating
 
 router = APIRouter()

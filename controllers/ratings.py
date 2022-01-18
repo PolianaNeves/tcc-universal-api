@@ -1,4 +1,4 @@
-from controllers import POSITIVE, NEGATIVE
+from constants import POSITIVE, NEGATIVE
 from controllers.utils import count_reviews_by_rating
 
 

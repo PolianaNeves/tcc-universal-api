@@ -20,7 +20,7 @@ async def default_time_series(response: Response,
 
 
 @router.get("/reviews/time_series/{name}/details", response_class=FileResponse)
-async def default_time_series(response: Response,
+async def time_series_details(response: Response,
                               name: str = Path(None, description="Time series name to be returned")):
     filename = f"{name}.png"
     path = os.path.join("./assets/details", filename)

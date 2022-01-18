@@ -1,8 +1,5 @@
 import pandas as pd
+import os
 
 
-dataset_completed = pd.read_csv("./dataset/dataset_completed.csv")
-positive_frequencies = pd.read_csv("./dataset/positive_frequencies.csv")
-negative_frequencies = pd.read_csv("./dataset/negative_frequencies.csv")
-
-
+dataset_completed = pd.read_csv(os.path.join("./dataset", "dataset_completed.csv"))

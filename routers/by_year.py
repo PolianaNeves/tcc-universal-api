@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Path
 
-from init_dataset import dataset_completed
+from inits.init_dataset import dataset_completed
 from models.by_year import ReviewsCountByYearList, ReviewsCountByYear
 from controllers import by_year
 

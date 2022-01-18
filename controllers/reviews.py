@@ -1,12 +1,6 @@
 import numpy as np
 
-from controllers import POSITIVE, NEGATIVE
-
-
-def get_top_n_frequent_terms(dataset, top_n):
-    temp_dataset = dataset.sort_values(by="frequency", ascending=False)
-    temp_dataset.columns = ["term", "frequency"]
-    return np.array(temp_dataset.head(top_n))
+from constants import POSITIVE, NEGATIVE
 
 
 def get_positive_reviews_count(dataset):
