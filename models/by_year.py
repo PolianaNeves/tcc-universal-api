@@ -5,7 +5,7 @@ from models.reviews import ReviewsCount
 
 
 class ReviewsCountByYear(ReviewsCount):
-    year: str
+    label: str
 
 
 class ReviewsCountByYearList(BaseModel):

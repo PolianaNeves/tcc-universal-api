@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from typing import List
 
+from models.reviews import ReviewsCount
 
-class FrequentTerms(BaseModel):
-    term: str
-    frequency: str
+
+class FrequentTerms(ReviewsCount):
+    label: str
 
 
 class FrequentTermsList(BaseModel):

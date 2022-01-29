@@ -5,7 +5,7 @@ from models.reviews import ReviewsCount
 
 
 class ReviewsCountByAttraction(ReviewsCount):
-    attraction: str
+    label: str
 
 
 class ReviewsCountByAttractionList(BaseModel):

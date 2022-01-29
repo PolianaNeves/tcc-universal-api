@@ -14,7 +14,7 @@ async def top_terms(top_n: int = Path(None, description="Top N features to be di
     most_frequent = frequencies.get_top_n_frequent_terms(dataset_completed, top_n)
     frequent_terms = []
     for term in most_frequent:
-        frequent_term = FrequentTerms(term=term[0], frequency=term[1])
+        frequent_term = FrequentTerms(label=term[0], value=term[1])
         frequent_terms.append(frequent_term)
 
     return FrequentTermsList(data=frequent_terms)
@@ -26,7 +26,7 @@ async def top_positive_terms(top_n: int = Path(None, description="Top N features
     most_frequent = frequencies.get_top_n_frequent_terms(positive_dataset, top_n)
     frequent_terms = []
     for term in most_frequent:
-        frequent_term = FrequentTerms(term=term[0], frequency=term[1])
+        frequent_term = FrequentTerms(label=term[0], value=term[1])
         frequent_terms.append(frequent_term)
 
     return FrequentTermsList(data=frequent_terms)
@@ -38,7 +38,7 @@ async def top_positive_terms(top_n: int = Path(None, description="Top N features
     most_frequent = frequencies.get_top_n_frequent_terms(negative_dataset, top_n)
     frequent_terms = []
     for term in most_frequent:
-        frequent_term = FrequentTerms(term=term[0], frequency=term[1])
+        frequent_term = FrequentTerms(label=term[0], value=term[1])
         frequent_terms.append(frequent_term)
 
     return FrequentTermsList(data=frequent_terms)

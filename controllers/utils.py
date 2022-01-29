@@ -15,7 +15,7 @@ my_path = os.path.relpath(os.path.join(os.path.dirname(__file__), os.pardir))
 def count_reviews_by_year(grouped_df):
     list_by_year = []
     for key, item in grouped_df:
-        count_by_year = ReviewsCountByYear(year=str(key), count=len(item))
+        count_by_year = ReviewsCountByYear(label=str(key), value=len(item))
         list_by_year.append(count_by_year)
     return list_by_year
 
@@ -23,7 +23,7 @@ def count_reviews_by_year(grouped_df):
 def count_reviews_by_branch(grouped_df):
     list_by_branch = []
     for key, item in grouped_df:
-        count_by_branch = ReviewsCountByBranch(branch=key, count=len(item))
+        count_by_branch = ReviewsCountByBranch(label=key, value=len(item))
         list_by_branch.append(count_by_branch)
     return list_by_branch
 
@@ -31,7 +31,7 @@ def count_reviews_by_branch(grouped_df):
 def count_reviews_by_rating(grouped_df):
     list_by_rating = []
     for key, item in grouped_df:
-        count_by_rating = ReviewsCountByRating(rating=key, count=len(item))
+        count_by_rating = ReviewsCountByRating(label=key, value=len(item))
         list_by_rating.append(count_by_rating)
     return list_by_rating
 
@@ -42,7 +42,7 @@ def count_reviews_by_attraction(column_filter):
     temp_df = dataset_attractions_count[[name, column_filter]]
     for index, row in temp_df.iterrows():
         if float(row[column_filter]) > 0:
-            attraction_count = ReviewsCountByAttraction(attraction=row[name], count=row[column_filter])
+            attraction_count = ReviewsCountByAttraction(label=row[name], value=row[column_filter])
             list_by_attraction.append(attraction_count)
     return list_by_attraction
 

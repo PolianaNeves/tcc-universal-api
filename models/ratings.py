@@ -5,7 +5,7 @@ from models.reviews import ReviewsCount
 
 
 class ReviewsCountByRating(ReviewsCount):
-    rating: float
+    label: float
 
 
 class ReviewsCountByRatingsList(BaseModel):

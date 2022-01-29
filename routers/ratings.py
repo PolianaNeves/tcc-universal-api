@@ -15,7 +15,7 @@ async def count_reviews_by_ratings():
 @router.get("/reviews/count/by/ratings/{rating}", response_model=ReviewsCountByRating)
 async def count_reviews_by_rating(rating: float = Path(None, description="Rating to filter reviews")):
     count_by_rating = ratings.get_reviews_count_filter_by_rating(dataset_completed, rating)
-    return ReviewsCountByRating(rating=rating, count=count_by_rating)
+    return ReviewsCountByRating(label=rating, value=count_by_rating)
 
 
 @router.get("/reviews/positive/count/by/ratings", response_model=ReviewsCountByRatingsList)
@@ -27,7 +27,7 @@ async def count_positive_reviews_by_ratings():
 @router.get("/reviews/positive/count/by/ratings/{rating}", response_model=ReviewsCountByRating)
 async def count_positive_reviews_by_rating(rating: float = Path(None, description="Rating to filter reviews")):
     count_by_rating = ratings.get_positive_reviews_count_filter_by_rating(dataset_completed, rating)
-    return ReviewsCountByRating(rating=rating, count=count_by_rating)
+    return ReviewsCountByRating(label=rating, value=count_by_rating)
 
 
 @router.get("/reviews/negative/count/by/ratings", response_model=ReviewsCountByRatingsList)
@@ -39,4 +39,4 @@ async def count_negative_reviews_by_ratings():
 @router.get("/reviews/negative/count/by/ratings/{rating}", response_model=ReviewsCountByRating)
 async def count_negative_reviews_by_rating(rating: float = Path(None, description="Rating to filter reviews")):
     count_by_rating = ratings.get_negative_reviews_count_filter_by_rating(dataset_completed, rating)
-    return ReviewsCountByRating(rating=rating, count=count_by_rating)
+    return ReviewsCountByRating(label=rating, value=count_by_rating)

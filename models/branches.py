@@ -5,7 +5,7 @@ from models.reviews import ReviewsCount
 
 
 class ReviewsCountByBranch(ReviewsCount):
-    branch: str
+    label: str
 
 
 class ReviewsCountByBranchList(BaseModel):
