@@ -32,10 +32,11 @@ app.add_middleware(
 @app.get("/reviews/positive/count", response_model=ReviewsCount, tags=["General reviews"])
 async def count_positive_reviews():
     count = reviews.get_positive_reviews_count(dataset_completed)
-    return ReviewsCount(count=count)
+    return ReviewsCount(value=count)
+    
 
 
 @app.get("/reviews/negative/count", response_model=ReviewsCount, tags=["General reviews"])
 async def count_negative_reviews():
     count = reviews.get_negative_reviews_count(dataset_completed)
-    return ReviewsCount(count=count)
+    return ReviewsCount(value=count)
