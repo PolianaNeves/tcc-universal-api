@@ -1,5 +1,5 @@
 import inits
-from fastapi import FastAPI, Path
+from fastapi import FastAPI
 from controllers import reviews
 from inits.init_dataset import dataset_completed
 from models.reviews import ReviewsCount

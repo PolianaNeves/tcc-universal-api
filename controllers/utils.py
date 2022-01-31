@@ -81,7 +81,7 @@ def plot_prediction(df, file_name, fig_number):
     forecast['reviews_count'].plot(figsize=(12, 8), title='Reviews Count Over the Years', fontsize=20, label='Test')
     plt.legend()
     plt.grid()
-    plt.savefig(os.path.join("./assets", file_name))
+    plt.savefig(os.path.join("./assets", file_name), dpi=72)
 
 
 def get_limit_index(dataset):
@@ -105,4 +105,4 @@ def predict_with_prophet_model(prophet, file_name):
     future = prophet.make_future_dataframe(periods=2555)
     forecast = prophet.predict(future)
     figure = prophet.plot_components(forecast)
-    figure.savefig(os.path.join("./assets/details", file_name))
+    figure.savefig(os.path.join("./assets/details", file_name), dpi=72)

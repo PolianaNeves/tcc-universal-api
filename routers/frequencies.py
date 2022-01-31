@@ -2,8 +2,9 @@ from fastapi import APIRouter, Path, Response, status
 from inits.init_dataset import dataset_completed
 from controllers import frequencies
 from models.frequencies import FrequentTerms, FrequentTermsList
-from fastapi.responses import FileResponse
 from constants import POSITIVE, NEGATIVE
+import base64
+from models.images import ImageDecodedResponse
 import os
 
 router = APIRouter()
@@ -44,13 +45,14 @@ async def top_positive_terms(top_n: int = Path(None, description="Top N features
     return FrequentTermsList(data=frequent_terms)
 
 
-@router.get("/reviews/wordcloud/{name}/top/terms", response_class=FileResponse)
+@router.get("/reviews/wordcloud/{name}/top/terms", response_model=ImageDecodedResponse)
 async def top_terms_wordcloud(response: Response,
                               name: str = Path(None, description="Wordcloud name to be returned")):
-    filename = f"{name}.png"
+    filename = f"{name}.jpeg"
     path = os.path.join("./assets/wordcloud", filename)
     if os.path.exists(path):
-        return FileResponse(path)
+        b64_string = base64.b64encode(open(path, "rb").read())
+        return ImageDecodedResponse(data=b64_string.decode('utf-8'))
     else:
         response.status_code = status.HTTP_404_NOT_FOUND
         return response

@@ -1,9 +1,10 @@
 from controllers.utils import parse_df, train_and_predict, plot_prediction, train_with_prophet_model, \
     predict_with_prophet_model
 from inits.init_dataset import dataset_completed
+import constants
 import os
 
-if len(os.listdir('./assets')) == 1 or len(os.listdir('./assets/details')) == 1:
+if len(os.listdir('./assets')) == 3 or len(os.listdir('./assets/details')) == 1:
     df_full_parsed = parse_df(dataset_completed.loc[dataset_completed["year"] <= constants.PANDEMIC_YEAR])
 
     df_florida_reviews = dataset_completed.loc[(dataset_completed["branch"] == constants.FLORIDA_BRANCH) & (
@@ -36,7 +37,7 @@ if len(os.listdir('./assets')) == 1 or len(os.listdir('./assets/details')) == 1:
     df_singapore_pos_reviews = df_singapore_reviews.loc[df_singapore_reviews["label"] == constants.POSITIVE]
     df_singapore_pos_reviews_parsed = parse_df(df_singapore_pos_reviews)
 
-    if len(os.listdir('./assets')) == 1:
+    if len(os.listdir('./assets')) == 3:
         plot_prediction(df_full_parsed, constants.DEFAULT_FILE, 1)
         plot_prediction(df_florida_reviews_parsed, constants.FLORIDA_FILE, 2)
         plot_prediction(df_florida_neg_reviews_parsed, constants.FLORIDA_NEG_FILE, 3)
