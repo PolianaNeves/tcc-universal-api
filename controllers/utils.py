@@ -1,4 +1,4 @@
-from models.branches import ReviewsCountByBranch
+from cProfile import label
 from models.by_year import ReviewsCountByYear
 from models.ratings import ReviewsCountByRating
 from models.attractions import ReviewsCountByAttraction
@@ -11,21 +11,12 @@ import os
 
 my_path = os.path.relpath(os.path.join(os.path.dirname(__file__), os.pardir))
 
-
 def count_reviews_by_year(grouped_df):
     list_by_year = []
     for key, item in grouped_df:
         count_by_year = ReviewsCountByYear(label=str(key), value=len(item))
         list_by_year.append(count_by_year)
     return list_by_year
-
-
-def count_reviews_by_branch(grouped_df):
-    list_by_branch = []
-    for key, item in grouped_df:
-        count_by_branch = ReviewsCountByBranch(label=key, value=len(item))
-        list_by_branch.append(count_by_branch)
-    return list_by_branch
 
 
 def count_reviews_by_rating(grouped_df):

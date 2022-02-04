@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class BranchName(str, Enum):
+    full = "full"
     florida = "florida"
     japan = "japan"
     singapore = "singapore"

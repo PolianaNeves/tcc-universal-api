@@ -1,5 +1,6 @@
 POSITIVE = 1
 NEGATIVE = 0
+DEFAULT_BRANCH = "Todas"
 FLORIDA_BRANCH = "Universal Studios Florida"
 JAPAN_BRANCH = "Universal Studios Japan"
 SINGAPORE_BRANCH = "Universal Studios Singapore"
