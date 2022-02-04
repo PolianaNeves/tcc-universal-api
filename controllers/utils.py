@@ -1,6 +1,4 @@
-from cProfile import label
-from models.by_year import ReviewsCountByYear
-from models.ratings import ReviewsCountByRating
+from models.reviews import ReviewsCountBy, ReviewsGroup
 from models.attractions import ReviewsCountByAttraction
 from inits.init_dataset import dataset_attractions_count
 import pandas as pd
@@ -8,23 +6,41 @@ from autots import AutoTS
 import matplotlib.pyplot as plt
 from prophet import Prophet
 import os
+import constants
 
 my_path = os.path.relpath(os.path.join(os.path.dirname(__file__), os.pardir))
 
-def count_reviews_by_year(grouped_df):
-    list_by_year = []
-    for key, item in grouped_df:
-        count_by_year = ReviewsCountByYear(label=str(key), value=len(item))
-        list_by_year.append(count_by_year)
-    return list_by_year
 
-
-def count_reviews_by_rating(grouped_df):
-    list_by_rating = []
+def count_reviews_by(dataset, column_filter):
+    grouped_df = dataset.groupby([column_filter])
+    reviews_group_list = []
+    df_pos = dataset[dataset["label"] == constants.POSITIVE]
+    df_neg = dataset[dataset["label"] == constants.NEGATIVE]
+    default = ReviewsCountBy(label=constants.DEFAULT_BRANCH, total=len(dataset), positive=len(df_pos), negative=len(df_neg))
+    reviews_group_list.append(ReviewsGroup(key=constants.DEFAULT_BRANCH, data=[default]))
     for key, item in grouped_df:
-        count_by_rating = ReviewsCountByRating(label=key, value=len(item))
-        list_by_rating.append(count_by_rating)
-    return list_by_rating
+        reviews_count_by = []
+        df_full_pos = item[item["label"] == constants.POSITIVE]
+        df_full_neg = item[item["label"] == constants.NEGATIVE]
+        default = ReviewsCountBy(label=constants.DEFAULT_BRANCH, total=len(item), positive=len(df_full_pos), negative=len(df_full_neg))
+        df_florida = item[item["branch"] == constants.FLORIDA_BRANCH]
+        df_florida_pos = df_florida[df_florida["label"] == constants.POSITIVE]
+        df_florida_neg = df_florida[df_florida["label"] == constants.NEGATIVE]
+        florida = ReviewsCountBy(label=constants.FLORIDA_BRANCH, total=len(df_florida), positive=len(df_florida_pos), negative=len(df_florida_neg))
+        df_japan = item[item["branch"] == constants.JAPAN_BRANCH]
+        df_japan_pos = df_japan[df_japan["label"] == constants.POSITIVE]
+        df_japan_neg = df_japan[df_japan["label"] == constants.NEGATIVE]
+        japan = ReviewsCountBy(label=constants.JAPAN_BRANCH, total=len(df_japan), positive=len(df_japan_pos), negative=len(df_japan_neg))
+        df_singapore = item[item["branch"] == constants.SINGAPORE_BRANCH]
+        df_singapore_pos = df_singapore[df_singapore["label"] == constants.POSITIVE]
+        df_singapore_neg = df_singapore[df_singapore["label"] == constants.NEGATIVE]
+        singapore = ReviewsCountBy(label=constants.SINGAPORE_BRANCH, total=len(df_singapore), positive=len(df_singapore_pos), negative=len(df_singapore_neg))
+        reviews_count_by.append(default)
+        reviews_count_by.append(florida)
+        reviews_count_by.append(japan)
+        reviews_count_by.append(singapore)
+        reviews_group_list.append(ReviewsGroup(key=str(key), data=reviews_count_by))
+    return reviews_group_list
 
 
 def count_reviews_by_attraction(column_filter):

@@ -1,5 +1,5 @@
 from constants import POSITIVE, NEGATIVE, DEFAULT_BRANCH, FLORIDA_BRANCH, JAPAN_BRANCH, SINGAPORE_BRANCH
-from models.branches import ReviewsCountByBranch
+from models.reviews import ReviewsCountBy
 
 def get_reviews_count_by_branch(dataset):
     df_full_pos = dataset[dataset["label"] == POSITIVE]
@@ -15,12 +15,12 @@ def get_reviews_count_by_branch(dataset):
     df_singapore_neg = df_singapore[df_singapore["label"] == NEGATIVE]
 
     list_reviews = []
-    list_reviews.append(ReviewsCountByBranch(label=DEFAULT_BRANCH,
+    list_reviews.append(ReviewsCountBy(label=DEFAULT_BRANCH,
         total=len(dataset), positive=len(df_full_pos), negative=len(df_full_neg)))
-    list_reviews.append(ReviewsCountByBranch(label=FLORIDA_BRANCH, 
+    list_reviews.append(ReviewsCountBy(label=FLORIDA_BRANCH, 
         total=len(df_florida), positive=len(df_florida_pos), negative=len(df_florida_neg)))
-    list_reviews.append(ReviewsCountByBranch(label=JAPAN_BRANCH, 
+    list_reviews.append(ReviewsCountBy(label=JAPAN_BRANCH, 
         total=len(df_japan), positive=len(df_japan_pos), negative=len(df_japan_neg)))
-    list_reviews.append(ReviewsCountByBranch(label=SINGAPORE_BRANCH, 
+    list_reviews.append(ReviewsCountBy(label=SINGAPORE_BRANCH, 
         total=len(df_singapore), positive=len(df_singapore_pos), negative=len(df_singapore_neg)))
     return list_reviews
