@@ -32,3 +32,7 @@ Para executar a api, use o comando `uvicorn main:app --reload`
 Existem alguns erros que podem ser obtidos com estes pacotes, visto que a bilbioteca `pystan` não tem suporte para este OS.
 Entretanto, a execução da api em máquina Windows pode ser realizada de outras formas, como por exemplo, usando `wsl`.
 Segue link com explicação útil para execução da api neste OS: [Lasse Schmidt](https://lasse-schmidt90.medium.com/how-to-install-pystan-on-windows-a9918f51111)
+
+**ATENÇÃO**
+
+Os arquivos da pasta assets foram gerados com os dados obtidos através dos datasets atualizados no momento. O primeiro processamento é muito demorado devido aos modelos de machine learning que são executados. Caso queira gerá-los novamente, exclua os arquivos de imagem da pasta assets.
