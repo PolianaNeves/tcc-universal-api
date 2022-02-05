@@ -9,7 +9,7 @@ import os
 import constants
 
 my_path = os.path.relpath(os.path.join(os.path.dirname(__file__), os.pardir))
-
+branches = [constants.FLORIDA_BRANCH, constants.JAPAN_BRANCH, constants.SINGAPORE_BRANCH]
 
 def count_reviews_by(dataset, column_filter):
     grouped_df = dataset.groupby([column_filter])
@@ -23,22 +23,13 @@ def count_reviews_by(dataset, column_filter):
         df_full_pos = item[item["label"] == constants.POSITIVE]
         df_full_neg = item[item["label"] == constants.NEGATIVE]
         default = ReviewsCountBy(label=constants.DEFAULT_BRANCH, total=len(item), positive=len(df_full_pos), negative=len(df_full_neg))
-        df_florida = item[item["branch"] == constants.FLORIDA_BRANCH]
-        df_florida_pos = df_florida[df_florida["label"] == constants.POSITIVE]
-        df_florida_neg = df_florida[df_florida["label"] == constants.NEGATIVE]
-        florida = ReviewsCountBy(label=constants.FLORIDA_BRANCH, total=len(df_florida), positive=len(df_florida_pos), negative=len(df_florida_neg))
-        df_japan = item[item["branch"] == constants.JAPAN_BRANCH]
-        df_japan_pos = df_japan[df_japan["label"] == constants.POSITIVE]
-        df_japan_neg = df_japan[df_japan["label"] == constants.NEGATIVE]
-        japan = ReviewsCountBy(label=constants.JAPAN_BRANCH, total=len(df_japan), positive=len(df_japan_pos), negative=len(df_japan_neg))
-        df_singapore = item[item["branch"] == constants.SINGAPORE_BRANCH]
-        df_singapore_pos = df_singapore[df_singapore["label"] == constants.POSITIVE]
-        df_singapore_neg = df_singapore[df_singapore["label"] == constants.NEGATIVE]
-        singapore = ReviewsCountBy(label=constants.SINGAPORE_BRANCH, total=len(df_singapore), positive=len(df_singapore_pos), negative=len(df_singapore_neg))
         reviews_count_by.append(default)
-        reviews_count_by.append(florida)
-        reviews_count_by.append(japan)
-        reviews_count_by.append(singapore)
+        for branch in branches:
+            df_branch = item[item["branch"] == branch]
+            df_branch_pos = df_branch[df_branch["label"] == constants.POSITIVE]
+            df_branch_neg = df_branch[df_branch["label"] == constants.NEGATIVE]
+            branch_by = ReviewsCountBy(label=branch, total=len(df_branch), positive=len(df_branch_pos), negative=len(df_branch_neg))
+            reviews_count_by.append(branch_by)
         reviews_group_list.append(ReviewsGroup(key=str(key), data=reviews_count_by))
     return reviews_group_list
 
