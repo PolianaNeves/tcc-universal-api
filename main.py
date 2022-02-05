@@ -2,15 +2,15 @@ import inits
 from fastapi import FastAPI
 from inits.init_dataset import dataset_completed
 from fastapi.middleware.cors import CORSMiddleware
-from routers import time_series, frequencies, attractions
+from routers import time_series, frequencies
 from models.reviews import ReviewsCountByList, ReviewsGroupList
-from controllers import branches, utils
+from models.attractions import ReviewsCountAttractionsByBranchList
+from controllers import branches, attractions, utils
 
 
 app = FastAPI()
 app.include_router(time_series.router, tags=["Time series"])
 app.include_router(frequencies.router, tags=["Frequencies"])
-app.include_router(attractions.router, tags=["Attractions"])
 
 origins = [
     "http://localhost",
@@ -42,3 +42,9 @@ async def count_reviews_by_ratings():
 async def count_positive_reviews_by_year():
     reviews_by_year = utils.count_reviews_by(dataset_completed, "year")
     return ReviewsGroupList(data=reviews_by_year)
+
+
+@app.get("/reviews/count/by/attraction", response_model=ReviewsCountAttractionsByBranchList)
+async def reviews_count_by_attractions():
+    by_attraction = attractions.count_reviews_by_attraction()
+    return ReviewsCountAttractionsByBranchList(data=by_attraction)

@@ -1,6 +1,4 @@
 from models.reviews import ReviewsCountBy, ReviewsGroup
-from models.attractions import ReviewsCountByAttraction
-from inits.init_dataset import dataset_attractions_count
 import pandas as pd
 from autots import AutoTS
 import matplotlib.pyplot as plt
@@ -32,17 +30,6 @@ def count_reviews_by(dataset, column_filter):
             reviews_count_by.append(branch_by)
         reviews_group_list.append(ReviewsGroup(key=str(key), data=reviews_count_by))
     return reviews_group_list
-
-
-def count_reviews_by_attraction(column_filter):
-    list_by_attraction = []
-    name = f'{column_filter}_name'
-    temp_df = dataset_attractions_count[[name, column_filter]]
-    for index, row in temp_df.iterrows():
-        if float(row[column_filter]) > 0:
-            attraction_count = ReviewsCountByAttraction(label=row[name], value=row[column_filter])
-            list_by_attraction.append(attraction_count)
-    return list_by_attraction
 
 
 def parse_df(dataset):
